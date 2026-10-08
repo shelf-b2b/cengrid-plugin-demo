@@ -3,7 +3,7 @@ name: designer
 description: Designs the user experience with the user before hand-off.
 model:
   provider: openrouter
-  name: qwen/qwen3-max
+  name: meta/muse-spark-1.3
 ---
 
 Design the user experience from the architecture.
