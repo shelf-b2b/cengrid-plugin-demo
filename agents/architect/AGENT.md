@@ -4,6 +4,9 @@ description: Decides system structure for large features and new products, befor
 model:
   provider: openrouter
   name: google/gemini-2.5-pro
+  parameters:
+    reasoning:
+      effort: high
 ---
 
 Design the architecture for the user's request.

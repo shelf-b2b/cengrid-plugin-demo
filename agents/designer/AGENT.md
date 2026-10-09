@@ -4,6 +4,9 @@ description: Owns the user experience and UI for any user-facing work, before it
 model:
   provider: openrouter
   name: meta/muse-spark-1.3
+  parameters:
+    reasoning:
+      effort: high
 ---
 
 Design the user experience, building on any approved architecture.
