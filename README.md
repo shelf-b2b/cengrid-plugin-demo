@@ -10,4 +10,4 @@ Demo plugin showing how plugins add agents.
 
 | Instruction | Purpose |
 | --- | --- |
-| workflows | Development workflow: architect → designer → coder |
+| agent-first | Route every change through architect → designer → coder via the pipeline tool |
