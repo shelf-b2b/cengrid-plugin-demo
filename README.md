@@ -10,4 +10,4 @@ Demo plugin showing how plugins add agents.
 
 | Instruction | Purpose |
 | --- | --- |
-| agent-first | Route every change through architect → designer → coder via the pipeline tool |
+| agent-first | Route any work that matches a defined agent through the pipeline tool |
