@@ -3,7 +3,7 @@ name: architect
 description: Decides system structure for large features and new products, before any design or code.
 model:
   provider: openrouter
-  name: google/gemini-2.5-pro
+  name: openai/gpt-5.6-luna
   parameters:
     reasoning:
       effort: high
