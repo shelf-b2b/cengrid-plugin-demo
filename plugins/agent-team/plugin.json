@@ -1,0 +1,6 @@
+{
+  "name": "agent-team",
+  "version": "0.1.0",
+  "interface": { "displayName": "Agent team" },
+  "description": "Architect, designer, coder and code-reviewer agents, each on a different model."
+}

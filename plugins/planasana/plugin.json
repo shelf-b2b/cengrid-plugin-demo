@@ -1,0 +1,6 @@
+{
+  "name": "planasana",
+  "version": "0.1.0",
+  "interface": { "displayName": "Planasana environment" },
+  "description": "Flutter SDK and Firebase CLI for the Planasana app."
+}

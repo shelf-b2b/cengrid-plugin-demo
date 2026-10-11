@@ -1,0 +1,28 @@
+{
+  "name": "cengrid-plugin-demo",
+  "interface": { "displayName": "Cengrid plugin demo" },
+  "description": "Demo marketplace: an agent team, a routing instruction and a Flutter and Firebase environment, each its own plugin.",
+  "plugins": [
+    {
+      "name": "agent-team",
+      "source": { "source": "local", "path": "./plugins/agent-team" },
+      "description": "Architect, designer, coder and code-reviewer agents, each on a different model.",
+      "category": "Agents",
+      "policy": { "installation": "AVAILABLE", "authentication": "ON_INSTALL" }
+    },
+    {
+      "name": "agent-first",
+      "source": { "source": "local", "path": "./plugins/agent-first" },
+      "description": "Instruction that routes any work matching a defined agent through the pipeline tool.",
+      "category": "Instructions",
+      "policy": { "installation": "AVAILABLE", "authentication": "ON_INSTALL" }
+    },
+    {
+      "name": "planasana",
+      "source": { "source": "local", "path": "./plugins/planasana" },
+      "description": "Flutter SDK and Firebase CLI for the Planasana app.",
+      "category": "Environments",
+      "policy": { "installation": "AVAILABLE", "authentication": "ON_INSTALL" }
+    }
+  ]
+}

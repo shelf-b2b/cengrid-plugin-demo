@@ -1,0 +1,6 @@
+{
+  "name": "agent-first",
+  "version": "0.1.0",
+  "interface": { "displayName": "Agent-first routing" },
+  "description": "Instruction that routes any work matching a defined agent through the pipeline tool."
+}
