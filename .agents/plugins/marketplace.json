@@ -1,7 +1,7 @@
 {
   "name": "cengrid-plugin-demo",
   "interface": { "displayName": "Cengrid plugin demo" },
-  "description": "Demo marketplace: an agent team, a routing instruction and a Flutter and Firebase environment, each its own plugin.",
+  "description": "Demo marketplace: an agent team, a routing instruction and a set of Flutter, Node 24 and Firebase environments, each its own plugin.",
   "plugins": [
     {
       "name": "agent-team",
@@ -18,9 +18,9 @@
       "policy": { "installation": "AVAILABLE", "authentication": "ON_INSTALL" }
     },
     {
-      "name": "planasana",
-      "source": { "source": "local", "path": "./plugins/planasana" },
-      "description": "Flutter SDK and Firebase CLI for the Planasana app.",
+      "name": "environments",
+      "source": { "source": "local", "path": "./plugins/environments" },
+      "description": "Environments for Flutter build tools, Node 24 and the Firebase CLI.",
       "category": "Environments",
       "policy": { "installation": "AVAILABLE", "authentication": "ON_INSTALL" }
     }

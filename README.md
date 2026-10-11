@@ -14,7 +14,7 @@ Each plugin below is connected on its own and its items appear under **Available
 | --- | --- | --- |
 | `agent-team` | Four agents, each on a different model | `plugins/agent-team` |
 | `agent-first` | One instruction that routes work to those agents | `plugins/agent-first` |
-| `planasana` | One environment with Flutter and Firebase | `plugins/planasana` |
+| `environments` | Three environments: Flutter build tools, Node 24 and Firebase CLI | `plugins/environments` |
 
 ### agent-team
 
@@ -35,11 +35,15 @@ The agents run on OpenRouter models, so the deployment needs an OpenRouter key a
 
 Add it alongside `agent-team`. It tells the assistant not to do work that matches a defined agent itself, so it changes behavior wherever you add it.
 
-### planasana
+### environments
 
 | Environment | Tools |
 | --- | --- |
-| planasana | Flutter SDK, Firebase CLI |
+| `flutter` | Flutter build tools: the Flutter SDK and `flutter` CLI, with Dart |
+| `node-24` | Node.js 24 with npm |
+| `firebase` | Firebase CLI |
+
+Each environment is separate, so add only the ones you need. The Flutter environment installs the Flutter SDK. It does not include the Android SDK or Xcode.
 
 ## How it is laid out
 
@@ -48,7 +52,7 @@ Add it alongside `agent-team`. It tells the assistant not to do work that matche
 plugins/
   agent-team/    plugin.json  agents/<name>/AGENT.md
   agent-first/   plugin.json  instructions/agent-first/INSTRUCTIONS.md
-  planasana/     plugin.json  environments/planasana/{environment.json,mise.toml}
+  environments/  plugin.json  environments/<name>/{environment.json,mise.toml}
 ```
 
 The marketplace file is in Codex format. cengrid also reads the same JSON at `.claude-plugin/marketplace.json`.
