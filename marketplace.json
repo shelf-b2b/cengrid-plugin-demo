@@ -1,9 +1,6 @@
 {
   "name": "cengrid-plugin-demo",
-  "owner": { "name": "shelf-b2b" },
-  "metadata": {
-    "description": "Demo marketplace: an agent team, a routing instruction and a set of Flutter, Node 24 and Firebase environments, each its own plugin."
-  },
+  "description": "Demo marketplace: an agent team, a routing instruction and a set of Flutter, Node 24 and Firebase environments, each its own plugin.",
   "plugins": [
     {
       "name": "agent-team",

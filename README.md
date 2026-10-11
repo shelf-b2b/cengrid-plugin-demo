@@ -48,16 +48,14 @@ Each environment is separate, so add only the ones you need. The Flutter environ
 ## How it is laid out
 
 ```text
-.claude-plugin/marketplace.json      the marketplace: lists the plugins below
+marketplace.json                     the marketplace: lists the plugins below
 plugins/
   agent-team/    plugin.json  agents/<name>/AGENT.md
   agent-first/   plugin.json  instructions/agent-first/INSTRUCTIONS.md
   dev-tools/     plugin.json  environments/<name>/{environment.json,mise.toml}
 ```
 
-The marketplace file is `.claude-plugin/marketplace.json`, the format Claude Code and Codex both read.
-
-To add a plugin, create a directory under `plugins/` with a `plugin.json`, add an entry for it to `.claude-plugin/marketplace.json`, and Re-sync the marketplace.
+To add a plugin, create a directory under `plugins/` with a `plugin.json`, add an entry for it to `marketplace.json`, and Re-sync the marketplace.
 
 ## Moving from the single plugin
 
