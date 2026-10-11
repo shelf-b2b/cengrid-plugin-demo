@@ -12,3 +12,7 @@ Demo plugin showing how plugins add agents.
 | Instruction | Purpose |
 | --- | --- |
 | agent-first | Route any work that matches a defined agent through the pipeline tool |
+
+| Environment | Tools |
+| --- | --- |
+| planasana | Flutter SDK, Firebase CLI |
