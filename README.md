@@ -14,7 +14,7 @@ Each plugin below is connected on its own and its items appear under **Available
 | --- | --- | --- |
 | `agent-team` | Four agents, each on a different model | `plugins/agent-team` |
 | `agent-first` | One instruction that routes work to those agents | `plugins/agent-first` |
-| `environments` | Three environments: Flutter build tools, Node 24 and Firebase CLI | `plugins/environments` |
+| `dev-tools` | Three environments: Flutter build tools, Node 24 and Firebase CLI | `plugins/dev-tools` |
 
 ### agent-team
 
@@ -35,7 +35,7 @@ The agents run on OpenRouter models, so the deployment needs an OpenRouter key a
 
 Add it alongside `agent-team`. It tells the assistant not to do work that matches a defined agent itself, so it changes behavior wherever you add it.
 
-### environments
+### dev-tools
 
 | Environment | Tools |
 | --- | --- |
@@ -52,7 +52,7 @@ Each environment is separate, so add only the ones you need. The Flutter environ
 plugins/
   agent-team/    plugin.json  agents/<name>/AGENT.md
   agent-first/   plugin.json  instructions/agent-first/INSTRUCTIONS.md
-  environments/  plugin.json  environments/<name>/{environment.json,mise.toml}
+  dev-tools/     plugin.json  environments/<name>/{environment.json,mise.toml}
 ```
 
 The marketplace file is in Codex format. cengrid also reads the same JSON at `.claude-plugin/marketplace.json`.
