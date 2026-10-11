@@ -1,0 +1,27 @@
+{
+  "name": "cengrid-plugin-demo",
+  "owner": { "name": "shelf-b2b" },
+  "metadata": {
+    "description": "Demo marketplace: an agent team, a routing instruction and a set of Flutter, Node 24 and Firebase environments, each its own plugin."
+  },
+  "plugins": [
+    {
+      "name": "agent-team",
+      "source": "./plugins/agent-team",
+      "description": "Architect, designer, coder and code-reviewer agents, each on a different model.",
+      "category": "Agents"
+    },
+    {
+      "name": "agent-first",
+      "source": "./plugins/agent-first",
+      "description": "Instruction that routes any work matching a defined agent through the pipeline tool.",
+      "category": "Instructions"
+    },
+    {
+      "name": "dev-tools",
+      "source": "./plugins/dev-tools",
+      "description": "Environments for Flutter build tools, Node 24 and the Firebase CLI.",
+      "category": "Environments"
+    }
+  ]
+}
