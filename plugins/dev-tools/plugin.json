@@ -1,0 +1,6 @@
+{
+  "name": "dev-tools",
+  "version": "0.1.0",
+  "interface": { "displayName": "Dev tools" },
+  "description": "Environments for Flutter build tools, Node 24 and the Firebase CLI."
+}

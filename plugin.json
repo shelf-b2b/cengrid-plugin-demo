@@ -1,6 +1,0 @@
-{
-  "name": "cengrid-plugin-demo",
-  "version": "0.1.0",
-  "interface": { "displayName": "Cengrid plugin demo" },
-  "description": "Demo plugin: architect, designer and coder agents on different models."
-}
