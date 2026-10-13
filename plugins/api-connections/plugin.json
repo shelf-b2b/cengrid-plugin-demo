@@ -1,0 +1,8 @@
+{
+  "name": "api-connections",
+  "version": "0.1.0",
+  "interface": {
+    "displayName": "API connections demo"
+  },
+  "description": "Secret-free REST API definitions for Expo workflows, Vercel deployments and Sentry diagnostics. Configure tokens separately in the chosen organisation or team."
+}
