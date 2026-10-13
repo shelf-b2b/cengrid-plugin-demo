@@ -30,14 +30,14 @@
     },
     "demo-sentry-issues": {
       "name": "Sentry issue reads",
-      "description": "Before adding a token, narrow the endpoint to the approved organization's issue prefix on the confirmed API host. Use an internal integration token with read scopes.",
+      "description": "Choose shared read coverage at the API root with event:read and project:read, or narrow to the intended organization's issue prefix with event:read. Use an internal integration token on the confirmed API host and choose the intended Cengrid organisation or team audience.",
       "endpoint": "https://sentry.io/api/0",
       "auth": "bearer",
       "readOnly": true
     },
     "demo-sentry-project": {
       "name": "Sentry project reads",
-      "description": "Before adding a token, narrow the endpoint to one approved project's prefix on the confirmed API host. Use an internal integration token with read scopes.",
+      "description": "Optional project connection for narrow coverage: set the intended project's prefix on the confirmed API host and use an internal integration token with project:read. The shared API-root connection can cover these reads; choose the intended Cengrid organisation or team audience.",
       "endpoint": "https://sentry.io/api/0",
       "auth": "bearer",
       "readOnly": true
