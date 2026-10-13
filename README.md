@@ -46,15 +46,26 @@ This plugin demonstrates secret-free connection definitions. It requires a Cengr
 | `demo-expo-workflow-dispatch` | `https://api.expo.dev/v2/workflows/dispatch` | Optional workflow dispatch; permits writes |
 | `demo-vercel-inspection` | `https://api.vercel.com` | Read-only projects, deployments and build logs |
 | `demo-vercel-deployments` | `https://api.vercel.com/v13/deployments` | Optional deployment access; permits writes |
-| `demo-sentry-issues` | `https://sentry.io/api/0` | Read-only; narrow to the approved organisation's issue prefix |
-| `demo-sentry-project` | `https://sentry.io/api/0` | Read-only; narrow to one approved project's prefix |
+| `demo-sentry-issues` | `https://sentry.io/api/0` | Read-only; keep the API root for shared reads or narrow to the intended organisation's issue prefix |
+| `demo-sentry-project` | `https://sentry.io/api/0` | Optional read-only project connection for narrow coverage |
 
 All six use Bearer tokens and require no interactive OAuth. The `demo-` IDs distinguish these definitions from the MediaWorks catalog, allowing both plugins' connections to coexist without replacing one another.
 
-1. Open **Connections → Available** and select the intended organisation or team.
+1. Open **Connections → Available** and select the intended organisation or team audience.
 2. Choose **Configure** for the required definition. Review the API base URL and read-only setting; configure the optional write connections only when needed.
-3. For Sentry, confirm the organisation/project and API region, then narrow the base URL to `https://sentry.io/api/0/organizations/{org}/issues/` or `https://sentry.io/api/0/projects/{org}/{project}/` before entering a token. Replace the placeholders with verified values. A different region/host requires editing the definition and re-syncing; Configure can narrow its existing origin/path only.
-4. Enter the appropriate token in **Secret** and save. Expo uses a robot-user token, Vercel a token scoped to the intended team/project, and Sentry an internal-integration token with `event:read` and `project:read` for these read workflows.
+3. For Sentry, confirm the organisation/project and API region, then choose the shared or narrow coverage below before entering a token. Replace placeholders with verified values.
+4. Enter the appropriate token in **Secret** and save. Expo uses a robot-user token, Vercel a token scoped to the intended team/project, and Sentry an internal-integration token with the read permissions for the chosen coverage.
+
+The organisation's administrator chooses the Sentry connection layout:
+
+| Coverage | Configuration | Token permissions for these reads |
+| --- | --- | --- |
+| Shared API root | Configure `demo-sentry-issues` at `https://sentry.io/api/0` for issue and project release reads through one read-only connection. The separate `demo-sentry-project` connection is optional. | `event:read` and `project:read` |
+| Narrow issue and project prefixes | Configure `demo-sentry-issues` at `https://sentry.io/api/0/organizations/{org}/issues/` and, when project release reads are needed, `demo-sentry-project` at `https://sentry.io/api/0/projects/{org}/{project}/`. | `event:read` for issue reads; `project:read` for project release reads |
+
+Sentry internal-integration tokens are organisation-wide, with the integration's permissions controlling upstream access. Cengrid's configured endpoint restricts the API paths the connection can call; its organisation or team scope controls who can use the connection. Choose that audience independently of whether coverage uses the API root or narrower prefixes.
+
+Configure can keep the definition's endpoint or narrow it within the same origin and base path. A different API region/host requires editing the definition and re-syncing. Changing a saved authenticated endpoint requires re-entering the token in **Secret**; use the secure token source rather than extracting a saved credential.
 
 No tokens, account identifiers or team grants are included in this repository. These entries teach the connection-definition format; provider workflow skills are supplied separately by the [MediaWorks plugins](https://github.com/mediaworks-holdings/mw-cengrid-plugins).
 
@@ -87,7 +98,7 @@ This repository used to be one plugin at the repository root. If you connected i
 
 To switch, remove the old plugin connection on the Plugins page, which also removes everything it added in every scope. Then link this repository as a marketplace and add the items you want again.
 
-## API connection sources
+## Sources
 
 - [Cengrid connection-definition schema and configuration](https://github.com/shelf-b2b/cengrid/blob/0250ca1bb70279b022946db81f4b2666fa330d8f/docs/connections.md#plugin-api-definitions)
 - [Expo programmatic access and robot users](https://docs.expo.dev/accounts/programmatic-access/)
@@ -97,3 +108,6 @@ To switch, remove the old plugin connection on the Plugins page, which also remo
 - [Sentry API authentication](https://docs.sentry.io/api/auth/)
 - [Sentry API permissions](https://docs.sentry.io/api/permissions/)
 - [Sentry API hosts and regions](https://docs.sentry.io/api/)
+- [Sentry internal integrations and organisation-wide tokens](https://docs.sentry.io/integrations/integration-platform/internal-integration/)
+- [Sentry organisation issue path and read permission](https://docs.sentry.io/api/events/retrieve-an-issue/)
+- [Sentry project release path and read permission](https://docs.sentry.io/api/releases/list-a-projects-releases/)
