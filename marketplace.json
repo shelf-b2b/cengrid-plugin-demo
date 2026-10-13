@@ -1,6 +1,6 @@
 {
   "name": "cengrid-plugin-demo",
-  "description": "Demo marketplace: an agent team, a routing instruction and a set of Flutter, Node 24 and Firebase environments, each its own plugin.",
+  "description": "Demo marketplace: an agent team, a routing instruction, development environments and REST API connection definitions, each its own plugin.",
   "plugins": [
     {
       "name": "agent-team",
@@ -13,6 +13,12 @@
       "source": "./plugins/agent-first",
       "description": "Instruction that routes any work matching a defined agent through the pipeline tool.",
       "category": "Instructions"
+    },
+    {
+      "name": "api-connections",
+      "source": "./plugins/api-connections",
+      "description": "Secret-free REST API definitions for Expo workflows, Vercel deployments and Sentry diagnostics.",
+      "category": "Connections"
     },
     {
       "name": "dev-tools",

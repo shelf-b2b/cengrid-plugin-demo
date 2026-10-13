@@ -1,0 +1,46 @@
+{
+  "connections": {
+    "demo-expo-workflows": {
+      "name": "Expo workflow inspection",
+      "description": "Read Expo EAS workflow runs with a robot-user access token for the intended account.",
+      "endpoint": "https://api.expo.dev",
+      "auth": "bearer",
+      "readOnly": true
+    },
+    "demo-expo-workflow-dispatch": {
+      "name": "Expo workflow dispatch (optional)",
+      "description": "Dispatch explicitly requested EAS workflows with a robot-user token. Add only for an authorized workflow; dispatch may start build or release jobs.",
+      "endpoint": "https://api.expo.dev/v2/workflows/dispatch",
+      "auth": "bearer",
+      "readOnly": false
+    },
+    "demo-vercel-inspection": {
+      "name": "Vercel inspection",
+      "description": "Read Vercel projects, deployments and build logs with a token scoped to the intended team or project.",
+      "endpoint": "https://api.vercel.com",
+      "auth": "bearer",
+      "readOnly": true
+    },
+    "demo-vercel-deployments": {
+      "name": "Vercel deployments (optional)",
+      "description": "Create explicitly requested deployments with a scoped token. Add only for an authorized deployment workflow; this connection permits writes.",
+      "endpoint": "https://api.vercel.com/v13/deployments",
+      "auth": "bearer",
+      "readOnly": false
+    },
+    "demo-sentry-issues": {
+      "name": "Sentry issue reads",
+      "description": "Before adding a token, narrow the endpoint to the approved organization's issue prefix on the confirmed API host. Use an internal integration token with read scopes.",
+      "endpoint": "https://sentry.io/api/0",
+      "auth": "bearer",
+      "readOnly": true
+    },
+    "demo-sentry-project": {
+      "name": "Sentry project reads",
+      "description": "Before adding a token, narrow the endpoint to one approved project's prefix on the confirmed API host. Use an internal integration token with read scopes.",
+      "endpoint": "https://sentry.io/api/0",
+      "auth": "bearer",
+      "readOnly": true
+    }
+  }
+}
