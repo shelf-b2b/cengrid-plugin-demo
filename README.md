@@ -1,6 +1,6 @@
 # cengrid-plugin-demo
 
-Demo marketplace for cengrid. One repository lists four plugins, so you link it once and choose which of their items to add.
+Demo marketplace for cengrid. One repository lists five plugins, so you link it once and choose which of their items to add.
 
 ## Link it
 
@@ -10,28 +10,29 @@ Each plugin below is connected on its own and its items appear under **Available
 
 ## Plugins
 
-| Plugin | Adds | Directory |
-| --- | --- | --- |
-| `agent-team` | Four agents, each on a different model | `plugins/agent-team` |
-| `agent-first` | One instruction that routes work to those agents | `plugins/agent-first` |
-| `api-connections` | Six REST API connection definitions for Expo, Vercel and Sentry | `plugins/api-connections` |
-| `dev-tools` | Three environments: Flutter build tools, Node 24 and Firebase CLI | `plugins/dev-tools` |
+| Plugin            | Adds                                                                              | Directory                 |
+| ----------------- | --------------------------------------------------------------------------------- | ------------------------- |
+| `agent-team`      | Four agents, each on a different model                                            | `plugins/agent-team`      |
+| `agent-first`     | One instruction that routes work to those agents                                  | `plugins/agent-first`     |
+| `api-connections` | Six REST API connection definitions for Expo, Vercel and Sentry                   | `plugins/api-connections` |
+| `dev-tools`       | Three environments: Flutter build tools, Node 24 and Firebase CLI                 | `plugins/dev-tools`       |
+| `kernel-browser`  | Kernel browser QA, team connection, agent, environment and optional design skills | `plugins/kernel-browser`  |
 
 ### agent-team
 
-| Agent | Model |
-| --- | --- |
-| architect | `openai/gpt-5.6-luna` |
-| designer | `meta/muse-spark-1.3` |
-| coder | `z-ai/glm-5.3` |
+| Agent         | Model                         |
+| ------------- | ----------------------------- |
+| architect     | `openai/gpt-5.6-luna`         |
+| designer      | `meta/muse-spark-1.3`         |
+| coder         | `z-ai/glm-5.3`                |
 | code-reviewer | `anthropic/claude-sonnet-5.5` |
 
 The agents run on OpenRouter models, so the deployment needs an OpenRouter key and these models in its catalog. A plugin with an agent whose model is unavailable is not connected, and its row on the marketplace card shows the reason.
 
 ### agent-first
 
-| Instruction | Purpose |
-| --- | --- |
+| Instruction | Purpose                                                               |
+| ----------- | --------------------------------------------------------------------- |
 | agent-first | Route any work that matches a defined agent through the pipeline tool |
 
 Add it alongside `agent-team`. It tells the assistant not to do work that matches a defined agent itself, so it changes behavior wherever you add it.
@@ -40,14 +41,14 @@ Add it alongside `agent-team`. It tells the assistant not to do work that matche
 
 This plugin demonstrates secret-free connection definitions. It requires a Cengrid deployment with [plugin API connection support](https://github.com/shelf-b2b/cengrid/pull/18). Linking or re-syncing the marketplace makes the definitions available; credentials and scope access are configured separately.
 
-| Definition | API base URL | Access |
-| --- | --- | --- |
-| `demo-expo-workflows` | `https://api.expo.dev` | Read-only workflow inspection |
-| `demo-expo-workflow-dispatch` | `https://api.expo.dev/v2/workflows/dispatch` | Optional workflow dispatch; permits writes |
-| `demo-vercel-inspection` | `https://api.vercel.com` | Read-only projects, deployments and build logs |
-| `demo-vercel-deployments` | `https://api.vercel.com/v13/deployments` | Optional deployment access; permits writes |
-| `demo-sentry-issues` | `https://sentry.io/api/0` | Read-only; narrow to the approved organisation's issue prefix |
-| `demo-sentry-project` | `https://sentry.io/api/0` | Read-only; narrow to one approved project's prefix |
+| Definition                    | API base URL                                 | Access                                                        |
+| ----------------------------- | -------------------------------------------- | ------------------------------------------------------------- |
+| `demo-expo-workflows`         | `https://api.expo.dev`                       | Read-only workflow inspection                                 |
+| `demo-expo-workflow-dispatch` | `https://api.expo.dev/v2/workflows/dispatch` | Optional workflow dispatch; permits writes                    |
+| `demo-vercel-inspection`      | `https://api.vercel.com`                     | Read-only projects, deployments and build logs                |
+| `demo-vercel-deployments`     | `https://api.vercel.com/v13/deployments`     | Optional deployment access; permits writes                    |
+| `demo-sentry-issues`          | `https://sentry.io/api/0`                    | Read-only; narrow to the approved organisation's issue prefix |
+| `demo-sentry-project`         | `https://sentry.io/api/0`                    | Read-only; narrow to one approved project's prefix            |
 
 All six use Bearer tokens and require no interactive OAuth. The `demo-` IDs distinguish these definitions from the MediaWorks catalog, allowing both plugins' connections to coexist without replacing one another.
 
@@ -60,13 +61,23 @@ No tokens, account identifiers or team grants are included in this repository. T
 
 ### dev-tools
 
-| Environment | Tools |
-| --- | --- |
-| `flutter` | Flutter build tools: the Flutter SDK and `flutter` CLI, with Dart |
-| `node-24` | Node.js 24 with npm |
-| `firebase` | Firebase CLI |
+| Environment | Tools                                                             |
+| ----------- | ----------------------------------------------------------------- |
+| `flutter`   | Flutter build tools: the Flutter SDK and `flutter` CLI, with Dart |
+| `node-24`   | Node.js 24 with npm                                               |
+| `firebase`  | Firebase CLI                                                      |
 
 Each environment is separate, so add only the ones you need. The Flutter environment installs the Flutter SDK. It does not include the Android SDK or Xcode.
+
+### kernel-browser
+
+An optional browser QA toolkit with a team Kernel API connection, browser skill,
+Haiku 5.5 QA agent, routing instruction and CLI environment. It also carries the
+`taste-skill` and `popular-web-designs` bundles moved out of CenGrid's starter catalog.
+Add components only to the teams that need them. The REST connection keeps its API key
+server-side; optional private tunnels require a separately authorized CLI credential.
+
+See [configuration, model rationale and tests](plugins/kernel-browser/README.md).
 
 ## How it is laid out
 
@@ -77,6 +88,7 @@ plugins/
   agent-first/   plugin.json  instructions/agent-first/INSTRUCTIONS.md
   api-connections/ plugin.json connections.json
   dev-tools/     plugin.json  environments/<name>/{environment.json,mise.toml}
+  kernel-browser/ plugin.json connections.json skills/ agents/ instructions/ environments/
 ```
 
 To add a plugin, create a directory under `plugins/` with a `plugin.json`, add an entry for it to `marketplace.json`, and Re-sync the marketplace.

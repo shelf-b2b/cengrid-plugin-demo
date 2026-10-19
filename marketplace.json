@@ -25,6 +25,12 @@
       "source": "./plugins/dev-tools",
       "description": "Environments for Flutter build tools, Node 24 and the Firebase CLI.",
       "category": "Environments"
+    },
+    {
+      "name": "kernel-browser",
+      "source": "./plugins/kernel-browser",
+      "description": "Optional Kernel browser QA, team API connection, CLI environment and design skills.",
+      "category": "Browser QA"
     }
   ]
 }
