@@ -12,7 +12,6 @@ When the `kernel-qa` agent is available, delegate a focused QA step through the 
 the harness's normal tools. The coding agent retains implementation and difficult fixes.
 Otherwise the current conversation model can follow the skill directly.
 
-Use `taste-skill` and `popular-web-designs` only when those optional design skills have
-also been added. Do not turn ordinary research or every coding task into a browser run.
+Do not turn ordinary research or every coding task into a browser run.
 Report unavailable credentials or tools as setup blockers, and report unexecuted assertions
 as blocked. No separate browser model or nested browsing SDK is required.

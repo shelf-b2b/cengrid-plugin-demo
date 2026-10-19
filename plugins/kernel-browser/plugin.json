@@ -1,6 +1,6 @@
 {
   "name": "kernel-browser",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "interface": { "displayName": "Kernel browser and QA" },
-  "description": "Optional team browser QA with a Kernel API connection, development tools, focused QA agent and design skills."
+  "description": "Optional team browser QA with a Kernel API connection, development tools and focused QA agent."
 }

@@ -1,6 +1,6 @@
 {
   "name": "cengrid-plugin-demo",
-  "description": "Demo marketplace: an agent team, a routing instruction, development environments and REST API connection definitions, each its own plugin.",
+  "description": "Demo marketplace with optional agents, instructions, development environments, REST API connections, browser QA and web design plugins.",
   "plugins": [
     {
       "name": "agent-team",
@@ -29,8 +29,14 @@
     {
       "name": "kernel-browser",
       "source": "./plugins/kernel-browser",
-      "description": "Optional Kernel browser QA, team API connection, CLI environment and design skills.",
+      "description": "Optional Kernel browser QA, team API connection, focused agent and CLI environment.",
       "category": "Browser QA"
+    },
+    {
+      "name": "web-design",
+      "source": "./plugins/web-design",
+      "description": "Optional taste-skill design playbook and popular-web-designs reference catalog, independent of browser providers.",
+      "category": "Design"
     }
   ]
 }
