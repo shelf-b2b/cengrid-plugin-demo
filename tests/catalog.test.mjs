@@ -23,6 +23,8 @@ const options = {
 const repositoryDir = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const pluginPath = "plugins/kernel-browser";
 const pluginDir = join(repositoryDir, pluginPath);
+const designPath = "plugins/web-design";
+const designDir = join(repositoryDir, designPath);
 const ORG = "org:default-org";
 const TEAM = "team:qa";
 const SIBLING = "team:other";
@@ -60,7 +62,7 @@ function core() {
   ).then(Object.fromEntries));
 }
 
-async function fetchedPlugin(commit = "recorded-one") {
+async function fetchedPlugin(path = pluginPath, commit = "recorded-one") {
   async function files(directory, prefix) {
     const entries = await readdir(directory, { withFileTypes: true });
     const groups = await Promise.all(
@@ -82,7 +84,7 @@ async function fetchedPlugin(commit = "recorded-one") {
     );
     return groups.flat();
   }
-  return { commit, files: await files(pluginDir, pluginPath) };
+  return { commit, files: await files(join(repositoryDir, path), path) };
 }
 
 async function hydrateModels(c) {
@@ -123,9 +125,9 @@ async function hydrateModels(c) {
   );
 }
 
-async function fixture() {
+async function fixture(path = pluginPath) {
   const c = await core();
-  let repo = await fetchedPlugin();
+  let repo = await fetchedPlugin(path);
   const calls = [];
   const credentials = c.createMemoryMap();
   const keychain = c.createKeychain({
@@ -162,11 +164,11 @@ async function fixture() {
     overrides: c.createCapabilityOverrideStore(c.createMemoryMap()),
     orgScopeId: ORG,
     runtime: async () => ({ harnessId: "pi", modelId: "claude-sonnet-5" }),
-    hydrateModels: () => hydrateModels(c),
+    ...(path === pluginPath ? { hydrateModels: () => hydrateModels(c) } : {}),
   };
   const service = c.createPluginService(deps);
   const plugin = await service.import(
-    { url: "shelf-b2b/cengrid-plugin-demo", path: pluginPath },
+    { url: "shelf-b2b/cengrid-plugin-demo", path },
     "alice",
   );
   return {
@@ -206,8 +208,114 @@ async function assertSiblingUnconfigured(deps) {
   );
 }
 
+test("marketplace lists browser QA and web design as independent plugins", async () => {
+  const marketplace = JSON.parse(
+    await readFile(join(repositoryDir, "marketplace.json"), "utf8"),
+  );
+  for (const path of [pluginPath, designPath]) {
+    const name = path.split("/").at(-1);
+    const entries = marketplace.plugins.filter(
+      (plugin) => plugin.name === name,
+    );
+    assert.equal(entries.length, 1);
+    assert.equal(entries[0].source, `./${path}`);
+    const manifest = JSON.parse(
+      await readFile(join(repositoryDir, path, "plugin.json"), "utf8"),
+    );
+    assert.equal(manifest.name, name);
+  }
+});
+
 test(
-  "actual Kernel plugin parses all optional capabilities and preserves vendored design assets",
+  "web design parses and installs independently without model hydration or browser capabilities",
+  options,
+  async () => {
+    const c = await core();
+    const catalog = c.parsePluginCatalog(
+      await fetchedPlugin(designPath),
+      designPath,
+      "web-design",
+    );
+    assert.deepEqual(catalog.issues, []);
+    assert.deepEqual(
+      catalog.items.filter((item) => item.unavailableReason),
+      [],
+    );
+    assert.deepEqual(
+      catalog.items.map((item) => [item.kind, item.key]).sort(),
+      [
+        ["skill", "popular-web-designs"],
+        ["skill", "taste-skill"],
+      ],
+    );
+    for (const item of catalog.items) {
+      assert.deepEqual(item.manifest.requiredCapabilities, []);
+      assert.deepEqual(item.manifest.requiresConnectors ?? [], []);
+      assert.doesNotMatch(
+        item.manifest.body,
+        /kernel-browser|kernel-cli|KERNEL_API_KEY|browser-use/i,
+      );
+    }
+    const design = catalog.items.find(
+      (item) => item.kind === "skill" && item.key === "popular-web-designs",
+    );
+    const templates = design.manifest.files.filter((file) =>
+      file.path.startsWith("templates/"),
+    );
+    assert.equal(templates.length, 54);
+    for (const file of templates)
+      assert.equal(
+        file.content,
+        await readFile(
+          join(designDir, "skills/popular-web-designs", file.path),
+          "utf8",
+        ),
+      );
+    const taste = catalog.items.find(
+      (item) => item.kind === "skill" && item.key === "taste-skill",
+    );
+    for (const path of ["LICENSE", "references/tasteskill.md"])
+      assert.equal(
+        taste.manifest.files.find((file) => file.path === path)?.content,
+        await readFile(join(designDir, "skills/taste-skill", path), "utf8"),
+      );
+    assert.match(
+      taste.manifest.files.find((file) => file.path === "LICENSE").content,
+      /MIT License/,
+    );
+    assert.match(
+      taste.manifest.body,
+      /https:\/\/github\.com\/leonxlnx\/taste-skill/,
+    );
+    const f = await fixture(designPath);
+    assert.deepEqual(await f.deps.skills.list(), []);
+    for (const item of f.plugin.items) await f.install(item);
+    assert.equal((await f.deps.skills.list()).length, 2);
+    for (const item of f.plugin.items) {
+      const skill = (await f.deps.skills.resolve(item.key, [TEAM, ORG])).skill;
+      assert.ok(skill);
+      assert.equal(skill.source.id, f.plugin.id);
+      assert.equal(skill.createdBy, `plugin:${f.plugin.id}`);
+      assert.ok(f.deps.skills.verify(skill));
+    }
+    assert.equal(
+      (await f.deps.skills.resolve("kernel-browser", [TEAM, ORG])).skill,
+      null,
+    );
+    for (const store of [
+      f.deps.agents,
+      f.deps.instructions,
+      f.deps.environmentDefinitions,
+      f.deps.connections,
+    ])
+      assert.deepEqual(await store.list(), []);
+    assert.deepEqual(await f.credentials.all(), []);
+    await assertSiblingUnconfigured(f.deps);
+  },
+);
+
+test(
+  "actual Kernel plugin parses only its five optional browser QA capabilities",
   options,
   async () => {
     const c = await core();
@@ -222,42 +330,16 @@ test(
       catalog.items.filter((item) => item.unavailableReason),
       [],
     );
-    const kinds = catalog.items.map((item) => item.kind).sort();
-    assert.deepEqual(kinds, [
+    assert.deepEqual(catalog.items.map((item) => item.kind).sort(), [
       "agent",
       "connection",
       "environment",
       "instruction",
       "skill",
-      "skill",
-      "skill",
     ]);
-    const design = catalog.items.find(
-      (item) => item.kind === "skill" && item.key === "popular-web-designs",
-    );
-    const templates = design.manifest.files.filter((file) =>
-      file.path.startsWith("templates/"),
-    );
-    assert.equal(templates.length, 54);
-    for (const file of templates)
-      assert.equal(
-        file.content,
-        await readFile(
-          join(pluginDir, "skills/popular-web-designs", file.path),
-          "utf8",
-        ),
-      );
-    const taste = catalog.items.find(
-      (item) => item.kind === "skill" && item.key === "taste-skill",
-    );
-    for (const path of ["LICENSE", "references/tasteskill.md"])
-      assert.equal(
-        taste.manifest.files.find((file) => file.path === path)?.content,
-        await readFile(join(pluginDir, "skills/taste-skill", path), "utf8"),
-      );
-    assert.match(
-      taste.manifest.files.find((file) => file.path === "LICENSE").content,
-      /MIT License/,
+    assert.doesNotMatch(
+      JSON.stringify(catalog.items),
+      /popular-web-designs|taste-skill|plugins\/web-design/,
     );
   },
 );

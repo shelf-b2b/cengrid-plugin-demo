@@ -1,0 +1,6 @@
+{
+  "name": "web-design",
+  "version": "0.1.0",
+  "interface": { "displayName": "Web design" },
+  "description": "Optional taste-skill design playbook and popular-web-designs reference catalog, independent of browser providers."
+}

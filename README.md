@@ -1,6 +1,6 @@
 # cengrid-plugin-demo
 
-Demo marketplace for cengrid. One repository lists five plugins, so you link it once and choose which of their items to add.
+Demo marketplace for cengrid. One repository lists six plugins, so you link it once and choose which of their items to add.
 
 ## Link it
 
@@ -10,13 +10,14 @@ Each plugin below is connected on its own and its items appear under **Available
 
 ## Plugins
 
-| Plugin            | Adds                                                                              | Directory                 |
-| ----------------- | --------------------------------------------------------------------------------- | ------------------------- |
-| `agent-team`      | Four agents, each on a different model                                            | `plugins/agent-team`      |
-| `agent-first`     | One instruction that routes work to those agents                                  | `plugins/agent-first`     |
-| `api-connections` | Six REST API connection definitions for Expo, Vercel and Sentry                   | `plugins/api-connections` |
-| `dev-tools`       | Three environments: Flutter build tools, Node 24 and Firebase CLI                 | `plugins/dev-tools`       |
-| `kernel-browser`  | Kernel browser QA, team connection, agent, environment and optional design skills | `plugins/kernel-browser`  |
+| Plugin            | Adds                                                                   | Directory                 |
+| ----------------- | ---------------------------------------------------------------------- | ------------------------- |
+| `agent-team`      | Four agents, each on a different model                                 | `plugins/agent-team`      |
+| `agent-first`     | One instruction that routes work to those agents                       | `plugins/agent-first`     |
+| `api-connections` | Six REST API connection definitions for Expo, Vercel and Sentry        | `plugins/api-connections` |
+| `dev-tools`       | Three environments: Flutter build tools, Node 24 and Firebase CLI      | `plugins/dev-tools`       |
+| `kernel-browser`  | Kernel browser QA, team connection, agent, instruction and environment | `plugins/kernel-browser`  |
+| `web-design`      | Website-design playbook and 54 reference templates                     | `plugins/web-design`      |
 
 ### agent-team
 
@@ -72,12 +73,20 @@ Each environment is separate, so add only the ones you need. The Flutter environ
 ### kernel-browser
 
 An optional browser QA toolkit with a team Kernel API connection, browser skill,
-Haiku 5.5 QA agent, routing instruction and CLI environment. It also carries the
-`taste-skill` and `popular-web-designs` bundles moved out of CenGrid's starter catalog.
+Haiku 5.5 QA agent, routing instruction and CLI environment.
 Add components only to the teams that need them. The REST connection keeps its API key
 server-side; optional private tunnels require a separately authorized CLI credential.
 
 See [configuration, model rationale and tests](plugins/kernel-browser/README.md).
+
+### web-design
+
+The optional `taste-skill` and `popular-web-designs` bundles moved out of CenGrid's
+starter catalog, with their supporting playbook, MIT notice and 54 reference templates.
+They use the current conversation model and any enabled browser tool for visual checks.
+Choose browser-testing tools separately; this plugin has no browser-provider dependency.
+
+See [configuration, upgrade notes and tests](plugins/web-design/README.md).
 
 ## How it is laid out
 
@@ -89,6 +98,7 @@ plugins/
   api-connections/ plugin.json connections.json
   dev-tools/     plugin.json  environments/<name>/{environment.json,mise.toml}
   kernel-browser/ plugin.json connections.json skills/ agents/ instructions/ environments/
+  web-design/     plugin.json skills/{taste-skill,popular-web-designs}/
 ```
 
 To add a plugin, create a directory under `plugins/` with a `plugin.json`, add an entry for it to `marketplace.json`, and Re-sync the marketplace.

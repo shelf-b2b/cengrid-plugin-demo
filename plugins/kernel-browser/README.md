@@ -6,19 +6,16 @@ Kernel browser. It does not install another model-driven browsing SDK.
 
 ## Available components
 
-| Kind        | Name                  | Purpose                                                                          |
-| ----------- | --------------------- | -------------------------------------------------------------------------------- |
-| Connection  | `kernel-browser`      | Team-configured Kernel REST API with a project-scoped Bearer key                 |
-| Skill       | `kernel-browser`      | Flow tests, screenshots, console/network evidence, server logs and login handoff |
-| Agent       | `kernel-qa`           | Focused QA on Haiku 5.5, returning evidence to the coding agent                  |
-| Instruction | `kernel-browser`      | Routes requested browser QA to the added skill/agent                             |
-| Environment | `kernel-cli`          | Node 24.18.0, Kernel CLI 0.49.0, websocat 1.14.1 and OpenSSH client              |
-| Skill       | `taste-skill`         | Optional website-design process and preserved MIT playbook                       |
-| Skill       | `popular-web-designs` | Optional design catalog with 54 reference templates                              |
+| Kind        | Name             | Purpose                                                                          |
+| ----------- | ---------------- | -------------------------------------------------------------------------------- |
+| Connection  | `kernel-browser` | Team-configured Kernel REST API with a project-scoped Bearer key                 |
+| Skill       | `kernel-browser` | Flow tests, screenshots, console/network evidence, server logs and login handoff |
+| Agent       | `kernel-qa`      | Focused QA on Haiku 5.5, returning evidence to the coding agent                  |
+| Instruction | `kernel-browser` | Routes requested browser QA to the added skill/agent                             |
+| Environment | `kernel-cli`     | Node 24.18.0, Kernel CLI 0.49.0, websocat 1.14.1 and OpenSSH client              |
 
 Nothing is installed or enabled automatically. Add only the components required by the
-organisation or team. The design bundles were moved from CenGrid's starter catalog with
-their names and supporting files preserved. Add both when using their cross-references.
+organisation or team.
 
 ## Configure a team
 
@@ -42,9 +39,9 @@ their names and supporting files preserved. Add both when using their cross-refe
    an unavailable model can prevent the plugin from connecting. It does not silently
    substitute another model. The skill itself can use the conversation's selected model
    on other harnesses.
-6. Add either design skill only when the team needs it. Imported items are read-only:
-   edit their source in GitHub and Re-sync for shared changes. A custom team QA agent
-   can use the same browser skill with a different configured model.
+
+Imported items are read-only: edit their source in GitHub and Re-sync for shared changes.
+A custom team QA agent can use the same browser skill with a different configured model.
 
 The API template permits POST `/browsers`, PATCH/DELETE `/browsers/*` and POST
 `/browsers/*/playwright/execute`; other writes are blocked by CenGrid. Reads stay within
@@ -122,8 +119,8 @@ Manual acceptance scenarios are in
 `agents/kernel-qa/test_cases.json`.
 
 Validate the whole plugin with CenGrid's `parsePluginCatalog` after loading its supported
-model catalog. Check that all three skills, the instruction, the agent, environment and
-API definition import without errors. Verify the moved MIT license and all 54 templates.
+model catalog. Check that the skill, instruction, agent, environment and API definition
+import without errors.
 
 Kernel's telemetry API paginates through response headers that CenGrid's API broker
 currently omits. The skill labels a full bounded page as partial coverage; optional CLI
@@ -136,8 +133,7 @@ The broker has a 30-second request ceiling; connection-based Playwright actions 
 authorized CLI. A transport timeout leaves an action's outcome uncertain: inspect state
 before repeating it.
 
-The design playbook's original MIT notice is preserved in
-`skills/taste-skill/LICENSE`. Kernel commands and API shapes follow the
+Kernel commands and API shapes follow the
 [pinned CLI release](https://github.com/kernel/cli/tree/v0.49.0),
 [API schema](https://api.onkernel.com/spec.yaml),
 [SSH guide](https://www.kernel.sh/docs/browsers/ssh) and
