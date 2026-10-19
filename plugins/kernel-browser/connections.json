@@ -1,0 +1,17 @@
+{
+  "connections": {
+    "kernel-browser": {
+      "name": "Kernel browsers",
+      "description": "Create and inspect test browsers, execute Playwright and collect diagnostics using a Kernel project-scoped API key. Configure each team's account separately.",
+      "endpoint": "https://api.onkernel.com",
+      "auth": "bearer",
+      "readOnly": false,
+      "healthPath": "/browsers?limit=1",
+      "writeRules": [
+        { "methods": ["POST"], "path": "/browsers" },
+        { "methods": ["PATCH", "DELETE"], "path": "/browsers/*" },
+        { "methods": ["POST"], "path": "/browsers/*/playwright/execute" }
+      ]
+    }
+  }
+}

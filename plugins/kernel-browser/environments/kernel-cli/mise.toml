@@ -1,0 +1,4 @@
+[tools]
+node = "24.18.0"
+"npm:@onkernel/cli" = { version = "0.49.0", allow_low_downloads = true }
+"aqua:vi/websocat" = "1.14.1"
